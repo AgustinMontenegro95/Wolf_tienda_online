@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "648050479195",
+    "project_id": "wolf-tienda-online-58346",
+    "storage_bucket": "wolf-tienda-online-58346.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648050479195:android:5a473dac9d2c49721cef7e",
+        "android_client_info": {
+          "package_name": "com.soludevarg.wolf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "648050479195-7pshtnqq5csmuv78pidhd2fkpcv0eiuf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.soludevarg.wolf",
+            "certificate_hash": "4b1a568d486dd7b4efba46453e81e72ca8afc38f"
+          }
+        },
+        {
+          "client_id": "648050479195-s4b4ig7lpe64n29502vpsks439fam0c0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBV8xbcg3rQ5HMsqhbsCyPThSnWLV65ywk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "648050479195-s4b4ig7lpe64n29502vpsks439fam0c0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
