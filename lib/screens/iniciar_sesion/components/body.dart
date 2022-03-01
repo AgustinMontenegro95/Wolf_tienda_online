@@ -88,7 +88,6 @@ class _BodyState extends State<Body> {
         RedSocialCard(
           icon: "assets/icons/facebook-2.svg",
           press: () {
-            //initiateFacebookLogin();
             _logInWithFacebook();
           },
         ),
@@ -100,7 +99,7 @@ class _BodyState extends State<Body> {
     );
   }
 
-  //codigo programming addict
+  //LogIn Facebook
   void _logInWithFacebook() async {
     User? user = _auth.currentUser;
     UserModel userModel = UserModel();
@@ -118,6 +117,10 @@ class _BodyState extends State<Body> {
           facebookLoginResult.accessToken!.token);
       await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
 
+      setState(() {
+        user = _auth.currentUser;
+      });
+
       userModel.email = userData['email'];
       userModel.uid = user!.uid;
       userModel.nombre = userData['name'];
@@ -133,7 +136,7 @@ class _BodyState extends State<Body> {
 
       await firebaseFirestore
           .collection("users")
-          .doc(user.uid)
+          .doc(user!.uid)
           .set(userModel.toMap());
 
       Navigator.pushNamedAndRemoveUntil(
@@ -174,6 +177,20 @@ class _BodyState extends State<Body> {
                       child: const Text("OK"))
                 ],
               ));
+    } catch (e) {
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+                title: const Text("Error al iniciar sesión con Facebook"),
+                content: const Text("Ocurrió un error desconocido"),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text("OK"))
+                ],
+              ));
     } finally {
       setState(() {
         loading = false;
@@ -181,8 +198,12 @@ class _BodyState extends State<Body> {
     }
   }
 
-  //codigo programming addict
+  //LogIn Google
   void _logInWithGoogle() async {
+    User? user = _auth.currentUser;
+    UserModel userModel = UserModel();
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
     setState(() {
       loading = true;
     });
@@ -206,11 +227,28 @@ class _BodyState extends State<Body> {
           idToken: googleSignInAuthentication.idToken);
 
       await FirebaseAuth.instance.signInWithCredential(credential);
-      await FirebaseFirestore.instance.collection("users").add({
-        'email': googleSignInAccount.email,
-        'imageUrl': googleSignInAccount.photoUrl,
-        'name': googleSignInAccount.displayName,
+
+      setState(() {
+        user = _auth.currentUser;
       });
+
+      userModel.email = googleSignInAccount.email;
+      userModel.uid = user!.uid;
+      userModel.nombre = googleSignInAccount.displayName;
+      userModel.apellido = "";
+      userModel.telefono = "";
+      userModel.calleDir = "";
+      userModel.numeroDir = "";
+      userModel.codPostal = "";
+      userModel.ciudad = "";
+      userModel.dni = "";
+      userModel.provincia = "";
+      userModel.imagPerfil = googleSignInAccount.photoUrl;
+
+      await firebaseFirestore
+          .collection("users")
+          .doc(user!.uid)
+          .set(userModel.toMap());
 
       Navigator.pushNamedAndRemoveUntil(
           context, HomeScreen.routeName, (route) => false);
